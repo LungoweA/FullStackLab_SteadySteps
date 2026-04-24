@@ -4,14 +4,18 @@ import connectDB from "./config/db.js";
 import dailyLogRoutes from "./routes/dailyLogRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import goalRoutes from "./routes/goalRoutes.js";
+import cors from "cors"
 
 dotenv.config();
 
-connectDB();
-
 const app = express();
 
+
+app.use(cors());
+
 app.use(express.json());
+
+connectDB();
 
 app.use("/api/dailylogs", dailyLogRoutes);
 
