@@ -68,3 +68,28 @@ export const deleteLog = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// AVERAGE STEPS FOR ONE USER
+export const getAverageStepsByUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const logs = await DailyLog.find({ userId });
+
+    if (logs.length === 0) {
+      return res.status(404).json({ message: "No logs found for this user" });
+    }
+
+    const totalSteps = logs.reduce((sum, log) => sum + log.steps, 0);
+    const averageSteps = totalSteps / logs.length;
+
+    res.json({
+      userId,
+      totalLogs: logs.length,
+      averageSteps: Math.round(averageSteps)
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

@@ -4,7 +4,8 @@ import {
   getLogs,
   getLogById,
   updateLog,
-  deleteLog
+  deleteLog,
+  getAverageStepsByUser
 } from "../controllers/dailyLogController.js";
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.get("/", getLogs);
 router.get("/:id", getLogById);
 router.put("/:id", updateLog);
 router.delete("/:id", deleteLog);
+router.get("/stats/average-steps/:userId", getAverageStepsByUser);
 
 export default router;
