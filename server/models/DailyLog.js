@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 const dailyLogSchema = new mongoose.Schema({
-  date: {
-    type: Date,
-    default: Date.now
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
   },
   steps: {
     type: Number,
@@ -23,6 +24,10 @@ const dailyLogSchema = new mongoose.Schema({
     type: String,
     enum: ["low", "ok", "good", "great"],
     default: "ok"
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
