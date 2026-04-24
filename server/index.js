@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import dailyLogRoutes from "./routes/dailyLogRoutes.js";
 
 dotenv.config();
 
@@ -8,10 +9,9 @@ connectDB();
 
 const app = express();
 
-// Test route
-app.get("/api/test", (req, res) => {
-  res.json({ message: "SteadySteps API is running" });
-});
+app.use(express.json());
+
+app.use("/api/dailylogs", dailyLogRoutes);
 
 const PORT = process.env.PORT || 5000;
 
