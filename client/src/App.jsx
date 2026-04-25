@@ -9,6 +9,7 @@ function App() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [goals, setGoals] = useState([]);
 
   const fetchUsers = () => {
   fetch("http://localhost:5000/api/users")
@@ -34,12 +35,20 @@ function App() {
       });
   };
 
+  const fetchGoals = () => {
+    fetch("http://localhost:5000/api/goals")
+      .then((res) => res.json())
+      .then((data) => setGoals(data))
+      .catch(() => setMessage("Failed to load goals"));
+  };
+
   useEffect(() => {
     fetchLogs();
 
     const interval = setInterval(() => {
       fetchUsers();
       fetchLogs();
+      fetchGoals();
     }, 10000);
 
     return () => clearInterval(interval);
@@ -47,6 +56,10 @@ function App() {
 
   const filteredLogs = logs.filter(
   (log) => log.userId && log.userId._id === selectedUser
+);
+
+  const userGoals = goals.filter(
+  (goal) => goal.userId && goal.userId._id === selectedUser
 );
 
   return (
@@ -68,6 +81,15 @@ function App() {
           </option>
         ))}
       </select>
+
+      <h3>Goal</h3>
+
+      {userGoals.map((goal) => (
+        <div key={goal._id}>
+          <p>Step goal: {goal.dailyStepGoal}</p>
+          <p>Target weight: {goal.targetWeight}</p>
+        </div>
+      ))}
 
       <DailyLogForm onRefresh={fetchLogs} selectedUser={selectedUser}/>
       <DailyLogList logs={filteredLogs} onRefresh={fetchLogs} />
