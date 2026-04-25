@@ -17,7 +17,12 @@ export const createGoal = async (req, res) => {
       return res.status(400).json({ message: "Target weight must be greater than 0" });
     }
 
-    const goal = await Goal.create(req.body);
+    const goal = await Goal.findOneAndUpdate(
+      { userId },          // find goal for this user
+      { dailyStepGoal, targetWeight }, // replace values
+      { new: true, upsert: true } // create if doesn't exist
+    );
+
     res.status(201).json(goal);
 
   } catch (err) {
