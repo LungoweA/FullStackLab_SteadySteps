@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import goalRoutes from "./routes/goalRoutes.js";
 import cors from "cors"
 
-dotenv.config();
+dotenv.config({ path: "./server/.env" });
 
 const app = express();
 
