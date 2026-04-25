@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function DailyLogForm({ onRefresh }) {
+function DailyLogForm({ onRefresh, selectedUser }) {
   const [form, setForm] = useState({
     steps: "",
     stairs: "",
@@ -15,12 +15,16 @@ function DailyLogForm({ onRefresh }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!selectedUser) {
+    alert("Please select a user first");
+    return;
+    }
     fetch("http://localhost:5000/api/dailylogs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(form)
+      body: JSON.stringify({...form, userId: selectedUser})
     }).then(() => {
       setForm({ steps: "", stairs: "", weight: "", mood: "" });
       onRefresh();

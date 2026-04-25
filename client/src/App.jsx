@@ -69,7 +69,7 @@ function App() {
         ))}
       </select>
 
-      <DailyLogForm onRefresh={fetchLogs} />
+      <DailyLogForm onRefresh={fetchLogs} selectedUser={selectedUser}/>
       <DailyLogList logs={filteredLogs} onRefresh={fetchLogs} />
     </div>
   );
