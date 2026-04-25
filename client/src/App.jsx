@@ -45,6 +45,10 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const filteredLogs = logs.filter(
+  (log) => log.userId && log.userId._id === selectedUser
+);
+
   return (
     <div style={{ padding: 20 }}>
       <h1>SteadySteps</h1>
@@ -66,7 +70,7 @@ function App() {
       </select>
 
       <DailyLogForm onRefresh={fetchLogs} />
-      <DailyLogList logs={logs} onRefresh={fetchLogs} />
+      <DailyLogList logs={filteredLogs} onRefresh={fetchLogs} />
     </div>
   );
 }
