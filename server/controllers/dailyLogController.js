@@ -5,7 +5,6 @@ export const createLog = async (req, res) => {
   try {
     const { steps, stairs, weight, mood, userId } = req.body;
 
-    // 🔒 Validation
     if (!userId) {
       return res.status(400).json({ message: "User is required" });
     }
