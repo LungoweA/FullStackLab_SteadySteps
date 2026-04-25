@@ -3,10 +3,25 @@ import Goal from "../models/Goal.js";
 // CREATE GOAL
 export const createGoal = async (req, res) => {
   try {
+    const { userId, dailyStepGoal, targetWeight } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User is required" });
+    }
+
+    if (dailyStepGoal == null || dailyStepGoal <= 0) {
+      return res.status(400).json({ message: "Daily step goal must be greater than 0" });
+    }
+
+    if (targetWeight == null || targetWeight <= 0) {
+      return res.status(400).json({ message: "Target weight must be greater than 0" });
+    }
+
     const goal = await Goal.create(req.body);
     res.status(201).json(goal);
+
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -23,6 +38,17 @@ export const getGoals = async (req, res) => {
 // UPDATE GOAL
 export const updateGoal = async (req, res) => {
   try {
+    const { dailyStepGoal, targetWeight } = req.body;
+
+    // 🔒 Validation (only if fields are provided)
+    if (dailyStepGoal !== undefined && dailyStepGoal <= 0) {
+      return res.status(400).json({ message: "Daily step goal must be greater than 0" });
+    }
+
+    if (targetWeight !== undefined && targetWeight <= 0) {
+      return res.status(400).json({ message: "Target weight must be greater than 0" });
+    }
+
     const goal = await Goal.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -34,7 +60,8 @@ export const updateGoal = async (req, res) => {
     }
 
     res.json(goal);
+
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };

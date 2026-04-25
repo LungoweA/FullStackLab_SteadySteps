@@ -3,10 +3,34 @@ import DailyLog from "../models/DailyLog.js";
 // CREATE
 export const createLog = async (req, res) => {
   try {
+    const { steps, stairs, weight, mood, userId } = req.body;
+
+    // 🔒 Validation
+    if (!userId) {
+      return res.status(400).json({ message: "User is required" });
+    }
+
+    if (steps == null || steps < 0) {
+      return res.status(400).json({ message: "Steps must be a positive number" });
+    }
+
+    if (stairs == null || stairs < 0) {
+      return res.status(400).json({ message: "Stairs must be a positive number" });
+    }
+
+    if (weight == null || weight <= 0) {
+      return res.status(400).json({ message: "Weight must be greater than 0" });
+    }
+
+    if (!mood || mood.trim() === "") {
+      return res.status(400).json({ message: "Mood is required" });
+    }
+
     const log = await DailyLog.create(req.body);
     res.status(201).json(log);
+
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -38,6 +62,24 @@ export const getLogById = async (req, res) => {
 // UPDATE
 export const updateLog = async (req, res) => {
   try {
+    const { steps, stairs, weight, mood } = req.body;
+
+    if (steps !== undefined && steps < 0) {
+      return res.status(400).json({ message: "Steps must be positive" });
+    }
+
+    if (stairs !== undefined && stairs < 0) {
+      return res.status(400).json({ message: "Stairs must be positive" });
+    }
+
+    if (weight !== undefined && weight <= 0) {
+      return res.status(400).json({ message: "Weight must be greater than 0" });
+    }
+
+    if (mood !== undefined && mood.trim() === "") {
+      return res.status(400).json({ message: "Mood cannot be empty" });
+    }
+
     const log = await DailyLog.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -49,8 +91,9 @@ export const updateLog = async (req, res) => {
     }
 
     res.json(log);
+
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
