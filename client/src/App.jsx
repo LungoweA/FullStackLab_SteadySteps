@@ -11,6 +11,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [goals, setGoals] = useState([]);
   const [editingGoal, setEditingGoal] = useState(null);
+  const [avgSteps, setAvgSteps] = useState(null);
 
   const fetchUsers = () => {
   fetch("http://localhost:5000/api/users")
@@ -65,6 +66,15 @@ function App() {
   (goal) => goal.userId && goal.userId._id === selectedUser
 );
 
+const fetchAvgSteps = (userId) => {
+  if (!userId) return;
+
+  fetch(`http://localhost:5000/api/dailylogs/stats/average-steps/${userId}`)
+    .then((res) => res.json())
+    .then((data) => setAvgSteps(data.averageSteps))
+    .catch(() => setAvgSteps(null));
+};
+
   return (
     <div style={{ padding: 20 }}>
       <h1>SteadySteps</h1>
@@ -75,7 +85,11 @@ function App() {
       <h3>Select User</h3>
       <select
         value={selectedUser}
-        onChange={(e) => setSelectedUser(e.target.value)}
+        onChange={(e) => {
+          const id = e.target.value;
+          setSelectedUser(id);
+          fetchAvgSteps(id);
+        }}
       >
         <option value="">-- Select a user --</option>
         {users.map((user) => (
@@ -100,6 +114,16 @@ function App() {
         </div>
       ) : (
         <p>No goal set for this user</p>
+      )}
+
+      <h3>Statistics</h3>
+
+      {!selectedUser ? (
+        <p>Please select a user</p>
+      ) : avgSteps !== null ? (
+        <p>Average Steps: {avgSteps}</p>
+      ) : (
+        <p>No statistics available</p>
       )}
 
       <DailyLogForm onRefresh={fetchLogs} selectedUser={selectedUser}/>

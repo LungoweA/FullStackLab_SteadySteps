@@ -2,7 +2,6 @@
 
 ## 📌Description
 SteadySteps is a fullstack web application for tracking daily physical activity, including steps, stairs, weight, and mood, to help users monitor progress and stay motivated over time.
-
 The goal of the app is to give users a simple and consistent way to log daily movement data and track long-term health habits.
 
 ---
@@ -42,10 +41,6 @@ The goal of the app is to give users a simple and consistent way to log daily mo
 - users
 - dailylogs
 - goals
-
-### Relationships
-- dailylogs.userId → users._id
-- goals.userId → users._id
 
 ---
 
