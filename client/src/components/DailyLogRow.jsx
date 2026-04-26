@@ -1,10 +1,22 @@
 function DailyLogRow({ log, onRefresh }) {
-  const handleDelete = () => {
-    if (!confirm("Delete this log?")) return;
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this log?");
+    if (!confirmDelete) return;
 
-    fetch(`http://localhost:5000/api/dailylogs/${log._id}`, {
-      method: "DELETE"
-    }).then(() => onRefresh());
+    try {
+      const res = await fetch(`http://localhost:5000/api/dailylogs/${log._id}`, {
+        method: "DELETE"
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete log");
+      }
+
+      onRefresh();
+    } catch (err) {
+      alert("Error deleting log");
+      console.error(err);
+    }
   };
 
   return (
