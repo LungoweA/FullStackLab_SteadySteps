@@ -14,9 +14,10 @@ function DailyLogList({ logs, onRefresh }) {
       </thead>
 
       <tbody>
-        {logs.map((log) => (
-          <DailyLogRow key={log._id} log={log} onRefresh={onRefresh} />
-        ))}
+        {Array.isArray(logs) &&
+          logs.map((log) => (
+            <DailyLogRow key={log._id} log={log} onRefresh={onRefresh} />
+          ))}
       </tbody>
     </table>
   );
