@@ -10,6 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [goals, setGoals] = useState([]);
+  const [editingGoal, setEditingGoal] = useState(null);
 
   const fetchUsers = () => {
   fetch("http://localhost:5000/api/users")
@@ -43,7 +44,9 @@ function App() {
   };
 
   useEffect(() => {
+    fetchUsers();
     fetchLogs();
+    fetchGoals();
 
     const interval = setInterval(() => {
       fetchUsers();
@@ -58,7 +61,7 @@ function App() {
   (log) => log.userId && log.userId._id === selectedUser
 );
 
-  const userGoals = goals.filter(
+  const userGoal = goals?.find(
   (goal) => goal.userId && goal.userId._id === selectedUser
 );
 
@@ -84,12 +87,20 @@ function App() {
 
       <h3>Goal</h3>
 
-      {userGoals.map((goal) => (
-        <div key={goal._id}>
-          <p>Step goal: {goal.dailyStepGoal}</p>
-          <p>Target weight: {goal.targetWeight}</p>
+      {!selectedUser ? (
+        <p>Please select a user</p>
+      ) : userGoal ? (
+        <div>
+          <p>Step goal: {userGoal.dailyStepGoal}</p>
+          <p>Target weight: {userGoal.targetWeight}</p>
+
+          <button onClick={() => setEditingGoal(userGoal._id)}>
+            Edit
+          </button>
         </div>
-      ))}
+      ) : (
+        <p>No goal set for this user</p>
+      )}
 
       <DailyLogForm onRefresh={fetchLogs} selectedUser={selectedUser}/>
       <DailyLogList logs={filteredLogs} onRefresh={fetchLogs} />
