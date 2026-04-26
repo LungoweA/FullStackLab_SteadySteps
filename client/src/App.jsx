@@ -8,7 +8,6 @@ function App() {
   const [selectedUser, setSelectedUser] = useState("");
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
   const [goals, setGoals] = useState([]);
   const [editingGoal, setEditingGoal] = useState(null);
   const [avgSteps, setAvgSteps] = useState(null);
