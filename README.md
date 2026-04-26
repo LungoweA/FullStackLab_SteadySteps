@@ -1,51 +1,57 @@
-🏃 SteadySteps
-📌 System Overview
+# SteadySteps👣
 
-SteadySteps is a fullstack web application that allows users to track daily physical activity such as steps, stairs climbed, weight, and mood. The app helps users monitor their fitness progress over time and manage personal health goals in a simple structured interface.
-Each user can log daily data and set personal fitness goals, enabling long-term tracking of health habits.
+## 📌Description
+SteadySteps is a fullstack web application for tracking daily physical activity, including steps, stairs, weight, and mood, to help users monitor progress and stay motivated over time.
 
-⚙️ Tech Stack
-Frontend: React (Vite)
-Backend: Node.js + Express
-Database: MongoDB Atlas
-ODM: Mongoose
-Dev Tooling: concurrently
-🚀 Features
-Frontend
-Create and display daily logs 
-Edit and delete logs
-Filter logs by selected user
-Backend
-Full CRUD API for daily logs and user management
-Relational endpoints using MongoDB references (userId)
-Custom endpoint: average steps per user
-Error handling with HTTP status codes
-🗄️ Database Design
-Collections
-users
-dailylogs
-goals
-Relationships
-dailylogs.userId → users._id
-goals.userId → users._id
+The goal of the app is to give users a simple and consistent way to log daily movement data and track long-term health habits.
 
-🧪 How to Run Locally
-1. Clone repository
-git clone https://github.com/LungoweA/FullStackLab_SteadySteps.git
-2. Install dependencies
+---
+
+## ⚙️Tech Stack
+- React (Vite)
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- Node.js
+
+---
+
+## 🚀Features
+
+### Frontend
+- Display daily logs in a structured table
+- Create new logs using controlled forms
+- Edit and delete logs (inline editing)
+- Filter logs by selected user
+- Auto-refresh data every 10 seconds
+- Loading and error states
+
+### Backend
+- Full CRUD API for daily logs
+- User management
+- Goal management (one goal per user using upsert logic)
+- Relational data using MongoDB references
+- Custom endpoint for user statistics (average steps per user)
+- Consistent error handling with HTTP status codes
+
+---
+
+## 🗄️Database Structure
+
+### Collections
+- users
+- dailylogs
+- goals
+
+### Relationships
+- dailylogs.userId → users._id
+- goals.userId → users._id
+
+---
+
+## 🧪Setup Instructions
+
+### Install dependencies
+```bash
 npm install
 cd client && npm install
-3. Environment variables
-
-Create .env inside /server:
-
-MONGO_URI=your_mongodb_connection_string
-PORT=5000
-4. Start application
-
-From root folder:
-npm run dev
-
-This starts:
-React frontend (Vite)
-Express backend
