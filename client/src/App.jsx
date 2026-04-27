@@ -13,7 +13,6 @@ function App() {
   const [editingGoal, setEditingGoal] = useState(null);
   const [avgSteps, setAvgSteps] = useState(null);
 
-  // ---------- FETCH USERS ----------
   const fetchUsers = () => {
     fetch("http://localhost:5000/api/users")
       .then((res) => res.json())
@@ -21,7 +20,6 @@ function App() {
       .catch(() => setMessage("Failed to load users"));
   };
 
-  // ---------- FETCH LOGS ----------
   const fetchLogs = () => {
     setLoading(true);
 
@@ -35,7 +33,6 @@ function App() {
       .finally(() => setLoading(false));
   };
 
-  // ---------- FETCH GOALS ----------
   const fetchGoals = () => {
     fetch("http://localhost:5000/api/goals")
       .then((res) => res.json())
@@ -43,7 +40,6 @@ function App() {
       .catch(() => setMessage("Failed to load goals"));
   };
 
-  // ---------- INIT + AUTO REFRESH ----------
   useEffect(() => {
     fetchUsers();
     fetchLogs();
@@ -58,17 +54,14 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // ---------- SAFE FILTERED LOGS ----------
   const filteredLogs = Array.isArray(logs)
     ? logs.filter((log) => log?.userId?._id === selectedUser)
     : [];
 
-  // ---------- SAFE GOAL ----------
   const userGoal = Array.isArray(goals)
     ? goals.find((goal) => goal?.userId?._id === selectedUser)
     : null;
 
-  // ---------- AVERAGE STEPS ----------
   const fetchAvgSteps = (userId) => {
     if (!userId) return;
 

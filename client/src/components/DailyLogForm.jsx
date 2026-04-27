@@ -64,7 +64,8 @@ function DailyLogForm({ onRefresh, selectedUser }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="formCard">
+
       <input
         type="number"
         name="steps"
@@ -72,6 +73,7 @@ function DailyLogForm({ onRefresh, selectedUser }) {
         value={form.steps}
         onChange={handleChange}
       />
+
       <input
         type="number"
         name="stairs"
@@ -79,6 +81,7 @@ function DailyLogForm({ onRefresh, selectedUser }) {
         value={form.stairs}
         onChange={handleChange}
       />
+
       <input
         type="number"
         name="weight"
@@ -86,12 +89,18 @@ function DailyLogForm({ onRefresh, selectedUser }) {
         value={form.weight}
         onChange={handleChange}
       />
-      <input
+
+      <select
         name="mood"
-        placeholder="Mood"
         value={form.mood}
         onChange={handleChange}
-      />
+      >
+        <option value="">Select mood</option>
+        <option value="low">Low</option>
+        <option value="ok">Ok</option>
+        <option value="good">Good</option>
+        <option value="great">Great</option>
+      </select>
 
       <button type="submit">Add Log</button>
     </form>

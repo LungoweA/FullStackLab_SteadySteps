@@ -4,6 +4,9 @@ import DailyLog from "../models/DailyLog.js";
 export const createLog = async (req, res) => {
   try {
     const { steps, stairs, weight, mood, userId } = req.body;
+    if (!validMoods.includes(mood)) {
+        return res.status(400).json({ message: "Invalid mood value" });
+    }
 
     if (!userId) {
       return res.status(400).json({ message: "User is required" });
@@ -75,8 +78,10 @@ export const updateLog = async (req, res) => {
       return res.status(400).json({ message: "Weight must be greater than 0" });
     }
 
-    if (mood !== undefined && mood.trim() === "") {
-      return res.status(400).json({ message: "Mood cannot be empty" });
+    const validMoods = ["low", "ok", "good", "great"];
+
+    if (mood !== undefined && !validMoods.includes(mood)) {
+        return res.status(400).json({ message: "Invalid mood value" });
     }
 
     const log = await DailyLog.findByIdAndUpdate(

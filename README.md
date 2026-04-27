@@ -17,36 +17,57 @@ The goal of the app is to give users a simple and consistent way to log daily mo
 
 ## 🚀Features
 
-### Frontend
-- Display daily logs in a structured table
-- Create new logs using controlled forms
-- Edit and delete logs (inline editing)
-- Filter logs by selected user
-- Auto-refresh data every 10 seconds
-- Loading and error states
-
-### Backend
-- Full CRUD API for daily logs
-- User management
-- Goal management (one goal per user using upsert logic)
-- Relational data using MongoDB references
-- Custom endpoint for user statistics (average steps per user)
-- Consistent error handling with HTTP status codes
-
----
-
-## 🗄️Database Structure
-
-### Collections
-- users
-- dailylogs
-- goals
+- Create users and assign daily activity logs
+- Track steps, stairs, weight, and mood
+- Update and delete logs with confirmation
+- View user-specific logs
+- Display goals per user
+- Show average step statistics per user
 
 ---
 
 ## 🧪Setup Instructions
 
-### Install dependencies
-```bash
-npm install
-cd client && npm install
+### Clone repository
+
+git clone https://github.com/LungoweA/FullStackLab_SteadySteps.git
+cd SteadySteps
+
+### Backend Setup
+
+cd server  
+npm install  
+
+Create a `.env` file inside `/server`:
+MONGO_URI=mongodb_connection_string  
+PORT=5000  
+
+Run backend:
+npm run dev  
+
+---
+
+### Frontend Setup
+cd client  
+npm install  
+npm run dev  
+
+---
+
+### Run both
+npm run dev
+(run from root folder while using concurrently)
+
+---
+
+## Seed Data
+To populate the database:
+
+node seed.js  
+
+This creates:
+- 5 realistic users
+- sample daily logs
+- goals per user  
+
+---

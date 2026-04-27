@@ -5,7 +5,6 @@ export const createUser = async (req, res) => {
   try {
     const { name, age, height } = req.body;
 
-    // 🔒 Validation
     if (!name || name.trim() === "") {
       return res.status(400).json({ message: "Name is required" });
     }
