@@ -45,7 +45,6 @@ export const updateGoal = async (req, res) => {
   try {
     const { dailyStepGoal, targetWeight } = req.body;
 
-    // 🔒 Validation (only if fields are provided)
     if (dailyStepGoal !== undefined && dailyStepGoal <= 0) {
       return res.status(400).json({ message: "Daily step goal must be greater than 0" });
     }

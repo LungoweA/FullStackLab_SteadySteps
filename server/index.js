@@ -10,7 +10,6 @@ dotenv.config({ path: "./server/.env" });
 
 const app = express();
 
-
 app.use(cors());
 
 app.use(express.json());

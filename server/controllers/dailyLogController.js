@@ -1,12 +1,11 @@
 import DailyLog from "../models/DailyLog.js";
 
+const validMoods = ["low", "ok", "good", "great"];
+
 // CREATE
 export const createLog = async (req, res) => {
   try {
     const { steps, stairs, weight, mood, userId } = req.body;
-    if (!validMoods.includes(mood)) {
-        return res.status(400).json({ message: "Invalid mood value" });
-    }
 
     if (!userId) {
       return res.status(400).json({ message: "User is required" });
@@ -24,8 +23,8 @@ export const createLog = async (req, res) => {
       return res.status(400).json({ message: "Weight must be greater than 0" });
     }
 
-    if (!mood || mood.trim() === "") {
-      return res.status(400).json({ message: "Mood is required" });
+    if (!validMoods.includes(mood)) {
+      return res.status(400).json({ message: "Invalid mood value" });
     }
 
     const log = await DailyLog.create(req.body);
@@ -46,7 +45,7 @@ export const getLogs = async (req, res) => {
   }
 };
 
-// READ ONE (by ID)
+// READ ONE
 export const getLogById = async (req, res) => {
   try {
     const log = await DailyLog.findById(req.params.id).populate("userId");
@@ -78,10 +77,8 @@ export const updateLog = async (req, res) => {
       return res.status(400).json({ message: "Weight must be greater than 0" });
     }
 
-    const validMoods = ["low", "ok", "good", "great"];
-
     if (mood !== undefined && !validMoods.includes(mood)) {
-        return res.status(400).json({ message: "Invalid mood value" });
+      return res.status(400).json({ message: "Invalid mood value" });
     }
 
     const log = await DailyLog.findByIdAndUpdate(
@@ -116,7 +113,7 @@ export const deleteLog = async (req, res) => {
   }
 };
 
-// AVERAGE STEPS FOR ONE USER
+// AVERAGE STEPS
 export const getAverageStepsByUser = async (req, res) => {
   try {
     const userId = req.params.userId;
