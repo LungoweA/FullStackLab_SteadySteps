@@ -14,7 +14,7 @@ function App() {
   const [avgSteps, setAvgSteps] = useState(null);
 
   const fetchUsers = () => {
-    fetch("http://localhost:5000/api/users")
+    fetch("https://steadysteps.onrender.com/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch(() => setMessage("Failed to load users"));
@@ -23,7 +23,7 @@ function App() {
   const fetchLogs = () => {
     setLoading(true);
 
-    fetch("http://localhost:5000/api/dailylogs")
+    fetch("https://steadysteps.onrender.com/api/dailylogs")
       .then((res) => res.json())
       .then((data) => {
         setLogs(data || []);
@@ -34,7 +34,7 @@ function App() {
   };
 
   const fetchGoals = () => {
-    fetch("http://localhost:5000/api/goals")
+    fetch("https://steadysteps.onrender.com/api/goals")
       .then((res) => res.json())
       .then((data) => setGoals(data || []))
       .catch(() => setMessage("Failed to load goals"));
@@ -65,7 +65,7 @@ function App() {
   const fetchAvgSteps = (userId) => {
     if (!userId) return;
 
-    fetch(`http://localhost:5000/api/dailylogs/stats/average-steps/${userId}`)
+    fetch(`https://steadysteps.onrender.com/api/dailylogs/stats/average-steps/${userId}`)
       .then((res) => res.json())
       .then((data) => setAvgSteps(data?.averageSteps ?? null))
       .catch(() => setAvgSteps(null));
